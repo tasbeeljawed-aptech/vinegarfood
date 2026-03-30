@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Menu – Vinegar Food Restaurant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <style>
+        :root {
+            --gold: #c8a96e;
+            --gold-light: #e8d5a3;
+            --gold-dark: #8b6914;
+            --black: #0a0a0a;
+            --dark: #111010;
+            --dark2: #1a1915;
+            --cream: #f5f0e8;
+            --text-muted: #8a8070;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--black);
+            color: var(--cream);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* CURSOR */
+        #cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            transition: transform .15s ease;
+        }
+
+        #cursor-ring {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(200, 169, 110, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            z-index: 9998;
+            pointer-events: none;
+            transition: all .35s ease;
+        }
+
+        /* NAVBAR */
+        #mainNav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 800;
+            padding: 22px 0;
+            transition: all .4s ease;
+        }
+
+        #mainNav.scrolled {
+            background: rgba(10, 10, 10, 0.97);
+            backdrop-filter: blur(12px);
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(200, 169, 110, 0.15);
+        }
+
+        .navbar-brand {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            color: var(--gold) !important;
+            letter-spacing: .15em;
+        }
+
+        .navbar-brand span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .7rem;
+            color: var(--text-muted);
+            display: block;
+            letter-spacing: .4em;
+            font-style: italic;
+        }
+
+        .nav-link {
+            font-family: 'Cinzel', serif;
+            font-size: .68rem;
+            letter-spacing: .2em;
+            color: var(--cream) !important;
+            padding: 8px 12px !important;
+            transition: color .3s;
+            text-transform: uppercase;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--gold) !important;
+        }
+
+        .dropdown-menu {
+            background: rgba(10, 10, 10, 0.97);
+            border: 1px solid rgba(200, 169, 110, 0.2);
+            border-radius: 0;
+            padding: 8px 0;
+            min-width: 180px;
+        }
+
+        .dropdown-item {
+            font-family: 'Lato', sans-serif;
+            font-size: .8rem;
+            color: var(--cream);
+            letter-spacing: .1em;
+            padding: 8px 20px;
+            transition: all .2s;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(200, 169, 110, 0.1);
+            color: var(--gold);
+        }
+
+        .navbar-toggler {
+            border: 1px solid var(--gold);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        .btn-outline-gold {
+            display: inline-block;
+            padding: 14px 38px;
+            background: transparent;
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: .72rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            border: 1px solid var(--gold);
+            cursor: pointer;
+            transition: all .3s;
+            text-decoration: none;
+        }
+
+        .btn-outline-gold:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* PAGE HERO */
+        .page-hero {
+            height: 45vh;
+            min-height: 320px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+                url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .page-hero-eyebrow {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--gold);
+            font-size: 1.2rem;
+            letter-spacing: .3em;
+            display: block;
+            margin-bottom: 12px;
+            animation: fadeUp .8s ease forwards;
+        }
+
+        .page-hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: #fff;
+            line-height: 1.1;
+            animation: fadeUp .8s ease .2s both;
+        }
+
+        .page-hero-title span {
+            color: var(--gold);
+        }
+
+        .page-hero-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--gold-light);
+            font-size: 1.1rem;
+            margin-top: 12px;
+            letter-spacing: .1em;
+            animation: fadeUp .8s ease .4s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* SECTION */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-eyebrow {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--gold);
+            font-size: 1.1rem;
+            letter-spacing: .3em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .section-title span {
+            color: var(--gold);
+        }
+
+        .gold-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0 40px;
+        }
+
+        .gold-divider::before,
+        .gold-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold));
+        }
+
+        .gold-divider::after {
+            background: linear-gradient(to left, transparent, var(--gold));
+        }
+
+        .gold-divider i {
+            color: var(--gold);
+            font-size: .9rem;
+        }
+
+        /* FILTER BAR */
+        .filter-bar {
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(200, 169, 110, 0.15);
+            padding: 0;
+        }
+
+        .filter-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 0;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-tab {
+            padding: 18px 28px;
+            font-family: 'Cinzel', serif;
+            font-size: .68rem;
+            letter-spacing: .2em;
+            color: var(--text-muted);
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all .3s;
+        }
+
+        .filter-tab.active,
+        .filter-tab:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        .filter-tab i {
+            margin-right: 8px;
+        }
+
+        /* MENU CATEGORY */
+        .menu-category {
+            margin-bottom: 80px;
+        }
+
+        .cat-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(200, 169, 110, 0.15);
+        }
+
+        .cat-icon {
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            border: 1px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 1.4rem;
+
+        }
+
+        .cat-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        .cat-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: .95rem;
+            margin-top: 4px;
+        }
+
+        .cat-count {
+            margin-left: auto;
+            font-family: 'Cinzel', serif;
+            font-size: .65rem;
+            letter-spacing: .25em;
+            color: var(--gold);
+            border: 1px solid rgba(200, 169, 110, 0.3);
+            padding: 6px 16px;
+        }
+
+        /* MENU CARD */
+        .menu-card {
+            background: var(--dark2);
+            border: 1px solid rgba(200, 169, 110, 0.1);
+            transition: all .35s;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card:hover {
+            border-color: rgba(200, 169, 110, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .menu-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform .6s ease;
+        }
+
+        .menu-card:hover .menu-card-img {
+            transform: scale(1.06);
+        }
+
+        .menu-card-body {
+            padding: 22px;
+        }
+
+        .menu-item-badge {
+            display: inline-block;
+            font-family: 'Cinzel', serif;
+            font-size: .55rem;
+            letter-spacing: .2em;
+            padding: 3px 10px;
+            margin-bottom: 10px;
+        }
+
+        .badge-veg {
+            background: rgba(76, 175, 80, 0.15);
+            color: #81c784;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .badge-non {
+            background: rgba(244, 67, 54, 0.1);
+            color: #ef9a9a;
+            border: 1px solid rgba(244, 67, 54, 0.2);
+        }
+
+        .badge-signature {
+            background: rgba(200, 169, 110, 0.15);
+            color: var(--gold);
+            border: 1px solid rgba(200, 169, 110, 0.3);
+        }
+
+        .badge-spicy {
+            background: rgba(255, 152, 0, 0.1);
+            color: #ffb74d;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+        }
+
+        .menu-item-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .menu-item-desc {
+            font-size: .83rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .menu-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .menu-item-price {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--gold);
+        }
+
+        .menu-item-price small {
+            font-size: .6rem;
+            color: var(--text-muted);
+            letter-spacing: .1em;
+            margin-left: 4px;
+        }
+
+        .add-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--gold);
+            background: none;
+            color: var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s;
+            font-size: .9rem;
+        }
+
+        .add-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* SECTION BG ALTERNATING */
+        .bg-dark2 {
+            background: var(--dark2);
+        }
+
+        /* REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* STATS RIBBON */
+        .stats-ribbon {
+            background: linear-gradient(to right, var(--gold-dark), var(--gold), var(--gold-dark));
+            padding: 30px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: var(--black);
+        }
+
+        .stat-label {
+            font-size: .72rem;
+            letter-spacing: .25em;
+            color: rgba(0, 0, 0, 0.6);
+            text-transform: uppercase;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #050504;
+            padding: 80px 0 0;
+            border-top: 1px solid rgba(200, 169, 110, 0.15);
+        }
+
+        .footer-brand {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            letter-spacing: .15em;
+        }
+
+        .footer-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .footer-heading {
+            font-family: 'Cinzel', serif;
+            font-size: .72rem;
+            letter-spacing: .25em;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: .85rem;
+            margin-bottom: 10px;
+            transition: color .2s;
+        }
+
+        .footer-link:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(200, 169, 110, 0.1);
+            font-size: .78rem;
+            color: var(--text-muted);
+        }
+
+        .social-link {
+            width: 38px;
+            height: 38px;
+            border: 1px solid rgba(200, 169, 110, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all .3s;
+            margin-right: 8px;
+        }
+
+        .social-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(200, 169, 110, 0.2);
+            color: #fff;
+            border-radius: 0;
+            padding: 14px 18px;
+            font-size: .9rem;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--gold);
+            box-shadow: none;
+            color: #fff;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn-gold {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--gold);
+            color: var(--black);
+            font-family: 'Cinzel', serif;
+            font-size: .72rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+            color: var(--black);
+        }
+
+        /* BOTTOM NAV */
+        #bottomNav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.97);
+            border-top: 1px solid rgba(200, 169, 110, 0.2);
+            z-index: 700;
+            padding: 10px 0 6px;
+        }
+
+        @media(max-width:768px) {
+            #bottomNav {
+                display: flex;
+            }
+
+            body {
+                padding-bottom: 70px;
+            }
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: .6rem;
+            letter-spacing: .08em;
+            transition: color .2s;
+        }
+
+        .bottom-nav-item i {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
+
+        .bottom-nav-item.active,
+        .bottom-nav-item:hover {
+            color: var(--gold);
+        }
+
+        /* SEARCH BAR */
+        .search-wrap {
+            background: rgba(200, 169, 110, 0.06);
+            border: 1px solid rgba(200, 169, 110, 0.15);
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            gap: 12px;
+            margin-bottom: 50px;
+        }
+
+        .search-wrap i {
+            color: var(--gold);
+        }
+
+        .search-wrap input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--cream);
+            font-family: 'Lato', sans-serif;
+            font-size: .95rem;
+            flex: 1;
+        }
+
+        .search-wrap input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* TOAST */
+        .toast-wrap {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            z-index: 9999;
+        }
+
+        .toast-item {
+            background: var(--dark2);
+            border: 1px solid rgba(200, 169, 110, 0.3);
+            padding: 14px 20px;
+            margin-top: 10px;
+            font-size: .82rem;
+            color: var(--cream);
+            animation: toastIn .4s ease;
+            min-width: 220px;
+        }
+
+        .toast-item span {
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: .75rem;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        /* MODAL */
+        .modal-content {
+            background: var(--dark2);
+            border: 1px solid rgba(200, 169, 110, 0.2);
+            border-radius: 0;
+            color: var(--cream);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid rgba(200, 169, 110, 0.15);
+            padding: 24px 30px;
+        }
+
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            letter-spacing: .15em;
+            color: var(--gold);
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- NAVBAR -->
+    <nav id="mainNav" class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="index.html">
+                VINEGAR
+                <span>Food Restaurant · JADONS Ltd.</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-1">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="meals.html" data-bs-toggle="dropdown">Meals</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#regular">Regular</a></li>
+                            <li><a class="dropdown-item" href="#lunch">Lunch</a></li>
+                            <li><a class="dropdown-item" href="#snacks">Snacks</a></li>
+                            <li><a class="dropdown-item" href="#dessert">Dessert</a></li>
+                            <li><a class="dropdown-item" href="#beverages">Beverages</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="awards.html">Awards</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catering.html">Catering</a></li>
+                    <li class="nav-item"><a class="nav-link" href="recipe.html">Recipe</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
+                    <li class="nav-item ms-2">
+                        <a class="btn-outline-gold" href="contact.html"
+                            style="font-size:.65rem;padding:10px 22px;">Reserve Table</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+        <div>
+            <span class="page-hero-eyebrow">72 Rotating Collections · 240,000 Delicacies</span>
+            <h1 class="page-hero-title">The Complete <span>Menu</span></h1>
+            <div class="page-hero-sub">Curated with passion. Served with pride.</div>
+        </div>
+    </div>
+
+    <!-- STATS RIBBON -->
+    <div class="stats-ribbon">
+        <div class="container">
+            <div class="row g-3 text-center">
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-num">72</div>
+                    <div class="stat-label">Rotating Menus</div>
+                </div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-num">240K</div>
+                    <div class="stat-label">Delicacies</div>
+                </div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-num">1000+</div>
+                    <div class="stat-label">Branches</div>
+                </div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-num">5</div>
+                    <div class="stat-label">Menu Categories</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STICKY FILTER BAR -->
+    <div class="filter-bar">
+        <div class="container-fluid px-4">
+            <div class="filter-tabs">
+                <a href="#regular">
+
+                    <button class="filter-tab active" onclick="scrollTo('#regular', this)"><i
+                            class="fas fa-utensils"></i>Regular</button>
+                </a>
+                <a href="#lunch">
+                    <button class="filter-tab" onclick="scrollTo('#lunch', this)"><i class="fas fa-sun"></i>Lunch</button>
+                </a>
+                <a href="#snacks">
+                    <button class="filter-tab" onclick="scrollTo('#snacks', this)"><i
+                            class="fas fa-cookie-bite"></i>Snacks</button>
+                </a>
+                <a href="#dessert">
+                    <button class="filter-tab" onclick="scrollTo('#dessert', this)"><i
+                            class="fas fa-ice-cream"></i>Dessert</button>
+                </a>
+                <a href="#beverages">
+                    <button class="filter-tab" onclick="scrollTo('#beverages', this)"><i
+                            class="fas fa-wine-glass-alt"></i>Beverages</button>
+                </a>
+                <a href="#seasonal">
+
+                    <button class="filter-tab" onclick="scrollTo('#seasonal', this)"><i
+                            class="fas fa-leaf"></i>Seasonal</button>
+                </a>
+                <a href="#chefs">
+                    <button class="filter-tab" onclick="scrollTo('#chefs', this)"><i class="fas fa-hat-chef"></i>Chef's
+                        Special</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container" style="padding-top: 60px;">
+        <!-- SEARCH -->
+        <div class="search-wrap reveal">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search from 240,000 delicacies..."
+                oninput="filterMenu(this.value)" />
+            <span style="color:var(--text-muted);font-size:.8rem;" id="searchCount"></span>
+        </div>
+    </div>
+
+    <!-- ─── REGULAR ─── -->
+    <section id="regular">
+        <div class="container">
+            <div class="menu-category">
+                <div class="cat-header reveal">
+                    <div class="cat-icon"><i class="fas fa-utensils"></i></div>
+                    <div>
+                        <div class="cat-title">Regular Meals</div>
+                        <div class="cat-subtitle">Our timeless everyday favourites — crafted fresh, served with love
+                        </div>
+                    </div>
+                    <div class="cat-count">12 Dishes</div>
+                </div>
+                <div class="row g-4" id="regular-grid">
+                    <!-- 12 regular items -->
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Herb-Crusted Lamb Rack">
+                        <div class="menu-card reveal">
+                            <img src="images/regular.png"
+                                class="menu-card-img" alt="Lamb Rack" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Herb-Crusted Lamb Rack</div>
+                                <div class="menu-item-desc">Slow-roasted lamb with rosemary jus, roasted root vegetables
+                                    & truffle mash. A timeless classic that defines our kitchen.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 2,850 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Grilled Sea Bass Fillet">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600"
+                                class="menu-card-img" alt="Sea Bass" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-non">Non-Veg</span>
+                                <div class="menu-item-name">Grilled Sea Bass Fillet</div>
+                                <div class="menu-item-desc">Pan-seared sea bass with lemon butter, capers, and seasonal
+                                    garden vegetables. Light yet deeply flavourful.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 2,400 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Prime Beef Tenderloin">
+                        <div class="menu-card reveal">
+                            <img src="images/regular2.png"
+                                class="menu-card-img" alt="Beef" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Prime Beef Tenderloin</div>
+                                <div class="menu-item-desc">28-day aged beef with peppercorn sauce, pomme purée &
+                                    asparagus. The pinnacle of red meat excellence.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 3,500 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Roast Chicken Supreme">
+                        <div class="menu-card reveal">
+                            <img src="images/roast chicken.png"
+                                class="menu-card-img" alt="Chicken" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-non">Non-Veg</span>
+                                <div class="menu-item-name">Roast Chicken Supreme</div>
+                                <div class="menu-item-desc">Free-range roast chicken with garlic herb butter, roasted
+                                    potatoes & seasonal jus.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,850 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Mushroom Risotto al Tartufo">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600"
+                                class="menu-card-img" alt="Risotto" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Mushroom Risotto al Tartufo</div>
+                                <div class="menu-item-desc">Slow-cooked Arborio rice, wild mushroom medley, black
+                                    truffle shavings & aged parmesan.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,600 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Grilled Prawn Platter">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600"
+                                class="menu-card-img" alt="Prawns" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-spicy">Spicy</span>
+                                <div class="menu-item-name">Grilled Prawn Platter</div>
+                                <div class="menu-item-desc">Tiger prawns marinated in chilli-lime butter, grilled to
+                                    perfection, served with garlic aioli & lime wedges.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 2,200 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Braised Short Rib">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600"
+                                class="menu-card-img" alt="Short Rib" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Braised Short Rib</div>
+                                <div class="menu-item-desc">12-hour slow-braised beef short rib, creamy polenta,
+                                    gremolata & red wine reduction.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 3,100 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Paneer Tikka Masala">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600"
+                                class="menu-card-img" alt="Paneer" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Paneer Tikka Masala</div>
+                                <div class="menu-item-desc">Charcoal-grilled paneer cubes in rich spiced tomato-cream
+                                    gravy, served with naan.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,350 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Duck Confit">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600"
+                                class="menu-card-img" alt="Duck" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-non">Non-Veg</span>
+                                <div class="menu-item-name">Duck Confit</div>
+                                <div class="menu-item-desc">Slow-cooked duck leg, crispy skin, orange reduction, haricot
+                                    verts & dauphinoise potatoes.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 2,750 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Butter Chicken Classic">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600"
+                                class="menu-card-img" alt="Butter Chicken" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-spicy">Spicy</span>
+                                <div class="menu-item-name">Butter Chicken Classic</div>
+                                <div class="menu-item-desc">Our legendary tandoori chicken in silky butter-tomato sauce,
+                                    served with buttered naan & basmati.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,650 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Grilled Lobster Thermidor">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1559737558-2f5a35f4523b?w=600"
+                                class="menu-card-img" alt="Lobster" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Grilled Lobster Thermidor</div>
+                                <div class="menu-item-desc">Whole grilled lobster, cognac cream sauce, gruyère glaze,
+                                    served with saffron rice.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 5,800 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Vegetable Wellington">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600"
+                                class="menu-card-img" alt="Veg Wellington" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Vegetable Wellington</div>
+                                <div class="menu-item-desc">Portobello, spinach & cheese wrapped in golden puff pastry,
+                                    with roasted tomato sauce.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,900 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── LUNCH ─── -->
+    <section id="lunch" class="bg-dark2">
+        <div class="container">
+            <div class="menu-category">
+                <div class="cat-header reveal">
+                    <div class="cat-icon"><i class="fas fa-sun"></i></div>
+                    <div>
+                        <div class="cat-title">Lunch Menu</div>
+                        <div class="cat-subtitle">Lighter bites for the midday hour — refreshing, nourishing, satisfying
+                        </div>
+                    </div>
+                    <div class="cat-count">10 Dishes</div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Signature Vinegar Bowl">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600"
+                                class="menu-card-img" alt="Bowl" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Signature Vinegar Bowl</div>
+                                <div class="menu-item-desc">Mixed grains, roasted veg, avocado, poached egg & tangy
+                                    house dressing. Our bestselling lunch.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,200 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Truffle Pasta Bianco">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600"
+                                class="menu-card-img" alt="Pasta" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Truffle Pasta Bianco</div>
+                                <div class="menu-item-desc">Hand-rolled pasta with white truffle oil, parmesan, and
+                                    fresh herbs. Creamy, indulgent, light.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,650 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Garden Mezze Platter">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600"
+                                class="menu-card-img" alt="Mezze" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Garden Mezze Platter</div>
+                                <div class="menu-item-desc">Seasonal greens, hummus, pita, olives & chef's daily soup. A
+                                    Mediterranean journey.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 980 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Grilled Chicken Caesar">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1546793665-c74683f339c1?w=600"
+                                class="menu-card-img" alt="Caesar" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-non">Non-Veg</span>
+                                <div class="menu-item-name">Grilled Chicken Caesar</div>
+                                <div class="menu-item-desc">Romaine, shaved parmesan, house-made caesar dressing,
+                                    croutons & grilled chicken strips.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,100 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Quinoa Protein Bowl">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600"
+                                class="menu-card-img" alt="Quinoa" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Quinoa Protein Bowl</div>
+                                <div class="menu-item-desc">Tri-colour quinoa, roasted chickpeas, feta, cucumber,
+                                    sun-dried tomatoes & lemon vinaigrette.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,050 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Club Sandwich Royale">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1481070414801-51fd732d7184?w=600"
+                                class="menu-card-img" alt="Sandwich" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-non">Non-Veg</span>
+                                <div class="menu-item-name">Club Sandwich Royale</div>
+                                <div class="menu-item-desc">Triple-decker with smoked turkey, streaky bacon, brie, vine
+                                    tomatoes, truffle mayo on toasted brioche.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,380 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Smoked Salmon Tartine">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600"
+                                class="menu-card-img" alt="Salmon" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Smoked Salmon Tartine</div>
+                                <div class="menu-item-desc">Open sourdough, cream cheese, smoked salmon, capers, red
+                                    onion & dill.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,500 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Spicy Thai Noodle Bowl">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600"
+                                class="menu-card-img" alt="Noodles" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-spicy">Spicy</span>
+                                <div class="menu-item-name">Spicy Thai Noodle Bowl</div>
+                                <div class="menu-item-desc">Rice noodles, coconut broth, lemongrass, crispy tofu, bean
+                                    sprouts & fresh coriander.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,200 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Chicken Shawarma Wrap">
+                        <div class="menu-card reveal">
+                            <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600"
+                                class="menu-card-img" alt="Shawarma" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-non">Non-Veg</span>
+                                <div class="menu-item-name">Chicken Shawarma Wrap</div>
+                                <div class="menu-item-desc">Marinated grilled chicken, garlic sauce, pickled veg,
+                                    tomatoes in freshly baked flatbread.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 850 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Biryani Express Bowl">
+                        <div class="menu-card reveal">
+                            <img src="images/biryani exp.png
+                            "
+                                class="menu-card-img" alt="Biryani" />
+                            <div class="menu-card-body">
+                                <span class="menu-item-badge badge-spicy">Spicy</span>
+                                <div class="menu-item-name">Biryani Express Bowl</div>
+                                <div class="menu-item-desc">Chef's signature express biryani — fragrant basmati,
+                                    slow-cooked protein, raita & pickled onion.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,100 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── SNACKS ─── -->
+    <section id="snacks">
+        <div class="container">
+            <div class="menu-category">
+                <div class="cat-header reveal">
+                    <div class="cat-icon"><i class="fas fa-cookie-bite"></i></div>
+                    <div>
+                        <div class="cat-title">Snacks & Starters</div>
+                        <div class="cat-subtitle">Perfect bites to ignite the appetite or share among friends</div>
+                    </div>
+                    <div class="cat-count">10 Dishes</div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Truffle Fries & Aioli">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1541014741259-de529411b96a?w=600z"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Truffle Fries & Aioli</div>
+                                <div class="menu-item-desc">Hand-cut fries tossed in truffle oil, parmesan & fresh
+                                    parsley with house aioli.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 450 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Crispy Calamari">
+                        <div class="menu-card reveal"><img
+                                src="images/lunch.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-non">Non-Veg</span>
+                                <div class="menu-item-name">Crispy Calamari</div>
+                                <div class="menu-item-desc">Lightly breaded squid rings, lemon zest, marinara dipping
+                                    sauce & fresh herbs.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 680 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Bruschetta Trio">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Bruschetta Trio</div>
+                                <div class="menu-item-desc">Three signature toppings on toasted artisan bread — tomato,
+                                    mushroom & avocado pesto.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 520 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Chicken Satay Skewers">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-spicy">Spicy</span>
+                                <div class="menu-item-name">Chicken Satay Skewers</div>
+                                <div class="menu-item-desc">Grilled spiced chicken skewers with peanut sauce, cucumber
+                                    salad & pickled daikon.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 580 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Spinach Artichoke Dip">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1541014741259-de529411b96a?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Spinach Artichoke Dip</div>
+                                <div class="menu-item-desc">Warm creamy spinach & artichoke dip, served with toasted
+                                    pita triangles & crudités.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 490 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Nachos Grande">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-spicy">Spicy</span>
+                                <div class="menu-item-name">Nachos Grande</div>
+                                <div class="menu-item-desc">Loaded nachos with melted cheese, jalapeños, guacamole,
+                                    salsa & sour cream.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 620 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Mini Beef Sliders">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Mini Beef Sliders</div>
+                                <div class="menu-item-desc">Three premium beef mini burgers with caramelised onion, aged
+                                    cheddar & house relish.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 750 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Soup of the Day">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Soup of the Day</div>
+                                <div class="menu-item-desc">Chef's daily seasonal soup, freshly made each morning with
+                                    artisan bread roll.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 380 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Chicken Wings BBQ">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-spicy">Spicy</span>
+                                <div class="menu-item-name">Chicken Wings BBQ</div>
+                                <div class="menu-item-desc">Smoky BBQ glazed chicken wings, celery sticks & blue cheese
+                                    dipping sauce.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 680 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Veggie Spring Rolls">
+                        <div class="menu-card reveal"><img
+                                src="images/veggie spring roll.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Veggie Spring Rolls</div>
+                                <div class="menu-item-desc">Crispy hand-rolled spring rolls stuffed with seasoned mixed
+                                    vegetables & sweet chilli sauce.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 420 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── DESSERT ─── -->
+    <section id="dessert" class="bg-dark2">
+        <div class="container">
+            <div class="menu-category">
+                <div class="cat-header reveal">
+                    <div class="cat-icon"><i class="fas fa-ice-cream"></i></div>
+                    <div>
+                        <div class="cat-title">Desserts</div>
+                        <div class="cat-subtitle">Sweet finales crafted to linger long after the last bite</div>
+                    </div>
+                    <div class="cat-count">10 Dishes</div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Dark Chocolate Fondant">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Dark Chocolate Fondant</div>
+                                <div class="menu-item-desc">Warm molten cake, vanilla bean ice cream, gold leaf garnish.
+                                    A legendary dessert.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 750 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Mango Panna Cotta">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Mango Panna Cotta</div>
+                                <div class="menu-item-desc">Silky Italian cream dessert, alphonso mango coulis, edible
+                                    flowers. Tropical elegance.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 620 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Artisan Cheese Board">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Artisan Cheese Board</div>
+                                <div class="menu-item-desc">Curated selection of aged cheeses, honeycomb, walnuts,
+                                    grapes & artisan crackers.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 980 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Classic Tiramisu">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1568051243851-f9b136146e97?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Classic Tiramisu</div>
+                                <div class="menu-item-desc">Mascarpone, espresso-soaked savoiardi, cocoa dust — the
+                                    Italian classic done to perfection.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 680 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Crème Brûlée Royale">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Crème Brûlée Royale</div>
+                                <div class="menu-item-desc">Silky vanilla custard beneath a perfectly caramelised sugar
+                                    crust, served with fresh berries.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 590 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Gulab Jamun Royale">
+                        <div class="menu-card reveal"><img
+                                src="images/gulab jamun.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Gulab Jamun Royale</div>
+                                <div class="menu-item-desc">Soft milk-solid dumplings in rose-saffron syrup, served warm
+                                    with malai ice cream.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 420 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Berry Cheesecake">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Berry Cheesecake</div>
+                                <div class="menu-item-desc">New York–style baked cheesecake with mixed berry compote &
+                                    graham cracker base.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 650 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Kulfi on Stick">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Kulfi on Stick</div>
+                                <div class="menu-item-desc">Traditional South Asian ice cream — pistachio, rose & mango
+                                    flavours, served on a stick.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 350 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Chocolate Lava Brownie">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Chocolate Lava Brownie</div>
+                                <div class="menu-item-desc">Warm fudge brownie, Nutella lava centre, served with two
+                                    scoops of gelato.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 580 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Fruit Tart Maison">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Vegetarian</span>
+                                <div class="menu-item-name">Fruit Tart Maison</div>
+                                <div class="menu-item-desc">Buttery pastry shell, vanilla custard cream, seasonal fruits
+                                    & apricot glaze.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 520 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── BEVERAGES ─── -->
+    <section id="beverages">
+        <div class="container">
+            <div class="menu-category">
+                <div class="cat-header reveal">
+                    <div class="cat-icon"><i class="fas fa-wine-glass-alt"></i></div>
+                    <div>
+                        <div class="cat-title">Beverages</div>
+                        <div class="cat-subtitle">Handcrafted drinks to complement every course and occasion</div>
+                    </div>
+                    <div class="cat-count">10 Drinks</div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Signature House Lemonade">
+                        <div class="menu-card reveal"><img
+                                src="images/lemonade.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Signature House Lemonade</div>
+                                <div class="menu-item-desc">Hand-squeezed lemon, elderflower cordial, fresh mint &
+                                    Himalayan salt rim.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 320 <small>/ glass</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Cold Brew Reserve">
+                        <div class="menu-card reveal"><img
+                                src="images/cold brew.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Cold Brew Reserve</div>
+                                <div class="menu-item-desc">24-hour steeped single-origin coffee, served over
+                                    crystal-clear ice. Bold & smooth.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 380 <small>/ glass</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Tropical Fruit Fusion">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Fresh</span>
+                                <div class="menu-item-name">Tropical Fruit Fusion</div>
+                                <div class="menu-item-desc">Fresh mango, passionfruit, guava & coconut water blend. A
+                                    glass of paradise.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 350 <small>/ glass</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Rose Iced Tea">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Fresh</span>
+                                <div class="menu-item-name">Rose Iced Tea</div>
+                                <div class="menu-item-desc">Cold-brewed black tea, rose water, lychee syrup & dried rose
+                                    petals. Delicate floral notes.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 290 <small>/ glass</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Mango Lassi Supreme">
+                        <div class="menu-card reveal"><img
+                                src="images/mango lassi.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Mango Lassi Supreme</div>
+                                <div class="menu-item-desc">Alphonso mango, full-fat yogurt, a hint of cardamom & topped
+                                    with pistachio dust.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 340 <small>/ glass</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Fresh Mint Mojito">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Fresh</span>
+                                <div class="menu-item-name">Fresh Mint Mojito</div>
+                                <div class="menu-item-desc">Muddled mint, lime juice, cane sugar, soda water. Classic
+                                    mocktail, perfectly balanced.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 280 <small>/ glass</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Masala Chai Latte">
+                        <div class="menu-card reveal"><img
+                                src="images/chai.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Hot</span>
+                                <div class="menu-item-name">Masala Chai Latte</div>
+                                <div class="menu-item-desc">Whole milk infused with cardamom, cinnamon, cloves, ginger &
+                                    premium Assam tea.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 240 <small>/ cup</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Espresso Double Shot">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Hot</span>
+                                <div class="menu-item-name">Espresso Double Shot</div>
+                                <div class="menu-item-desc">Rich, concentrated single-origin espresso, served with
+                                    sparkling water & dark chocolate.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 260 <small>/ cup</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Watermelon Mint Cooler">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1543253687-c931c8e01820?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Fresh</span>
+                                <div class="menu-item-name">Watermelon Mint Cooler</div>
+                                <div class="menu-item-desc">Fresh watermelon juice, fresh mint, a squeeze of lime & pink
+                                    Himalayan salt.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 300 <small>/ glass</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Strawberry Basil Lemonade">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Signature</span>
+                                <div class="menu-item-name">Strawberry Basil Lemonade</div>
+                                <div class="menu-item-desc">Fresh strawberries, basil, lemon & sparkling water. Our most
+                                    Instagrammed drink.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 330 <small>/ glass</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── SEASONAL ─── -->
+    <section id="seasonal" class="bg-dark2">
+        <div class="container">
+            <div class="menu-category">
+                <div class="cat-header reveal">
+                    <div class="cat-icon"><i class="fas fa-leaf"></i></div>
+                    <div>
+                        <div class="cat-title">Seasonal Specials</div>
+                        <div class="cat-subtitle">Rotating with the seasons — available for a limited time only</div>
+                    </div>
+                    <div class="cat-count">6 Dishes</div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Spring Pea Risotto">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Seasonal</span>
+                                <div class="menu-item-name">Spring Pea Risotto</div>
+                                <div class="menu-item-desc">Garden peas, mint oil, pecorino & lemon zest risotto. Pure
+                                    spring on a plate.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 1,400 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Grilled Corn on the Cob">
+                        <div class="menu-card reveal"><img
+                                src="images/corn on the cob.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-spicy">Seasonal</span>
+                                <div class="menu-item-name">Grilled Corn on the Cob</div>
+                                <div class="menu-item-desc">Charred corn, chilli-lime butter, cotija cheese & smoked
+                                    paprika dust.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 480 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Autumn Squash Soup">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Seasonal</span>
+                                <div class="menu-item-name">Autumn Squash Soup</div>
+                                <div class="menu-item-desc">Roasted butternut squash, coconut cream, toasted pepitas &
+                                    chilli oil swirl.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 550 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Tandoori Seasonal Veg">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Seasonal</span>
+                                <div class="menu-item-name">Tandoori Seasonal Veg</div>
+                                <div class="menu-item-desc">Seasonal vegetables marinated in spiced yogurt,
+                                    charcoal-grilled to smoky perfection.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 820 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Winter Lamb Stew">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-non">Seasonal</span>
+                                <div class="menu-item-name">Winter Lamb Stew</div>
+                                <div class="menu-item-desc">Slow-braised spiced lamb with root vegetables, pearl barley
+                                    & warm bread roll.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 2,100 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 menu-item-el" data-name="Strawberry Pavlova">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-veg">Seasonal</span>
+                                <div class="menu-item-name">Strawberry Pavlova</div>
+                                <div class="menu-item-desc">Crisp meringue, whipped cream, fresh seasonal strawberries &
+                                    passion fruit drizzle.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 680 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── CHEF'S SPECIAL ─── -->
+    <section id="chefs">
+        <div class="container">
+            <div class="menu-category">
+                <div class="cat-header reveal">
+                    <div class="cat-icon">
+                        <img src="" alt=""><i class="fas fa-hat-chef"></i></div>
+                    <div>
+                        <div class="cat-title">Chef's Special</div>
+                        <div class="cat-subtitle">Exclusive creations by our Head Chef — available for dine-in only
+                        </div>
+                    </div>
+                    <div class="cat-count">4 Dishes</div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3 menu-item-el" data-name="Saffron Biryani Royale">
+                        <div class="menu-card reveal"><img
+                                src="images/saffron biyani.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Chef's
+                                    Pick</span>
+                                <div class="menu-item-name">Saffron Biryani Royale</div>
+                                <div class="menu-item-desc">Our month's recipe star — 40-year old heirloom recipe.
+                                    Served on a silver platter.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 3,800 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 menu-item-el" data-name="Tasting Menu (7 Courses)">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Chef's
+                                    Pick</span>
+                                <div class="menu-item-name">Tasting Menu (7 Courses)</div>
+                                <div class="menu-item-desc">The full Vinegar experience — seven handcrafted courses by
+                                    our Head Chef. Reservation required.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 12,000 <small>/ person</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 menu-item-el" data-name="Wagyu Beef Steak">
+                        <div class="menu-card reveal"><img
+                                src="images/steak.png"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Chef's
+                                    Pick</span>
+                                <div class="menu-item-name">Wagyu Beef Steak A5</div>
+                                <div class="menu-item-desc">Imported A5 Wagyu, butter-basted tableside, truffle salt,
+                                    micro herb garnish.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 18,000 <small>/ serving</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 menu-item-el" data-name="Gold Leaf Dessert Tower">
+                        <div class="menu-card reveal"><img
+                                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600"
+                                class="menu-card-img" alt="" />
+                            <div class="menu-card-body"><span class="menu-item-badge badge-signature">★ Chef's
+                                    Pick</span>
+                                <div class="menu-item-name">Gold Leaf Dessert Tower</div>
+                                <div class="menu-item-desc">A showstopping four-tier dessert tower adorned with edible
+                                    24k gold leaf. A true finale.</div>
+                                <div class="menu-card-footer">
+                                    <div class="menu-item-price">Rs. 4,500 <small>/ tower</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-wrap" id="toastContainer"></div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <div class="footer-brand">VINEGAR</div>
+                    <div class="footer-tagline">The Serving Plates · JADONS Ltd.</div>
+                    <p style="margin-top:20px;color:var(--text-muted);font-size:.88rem;line-height:1.8;">Crafting
+                        extraordinary culinary experiences for decades. From our kitchen to your table — with love,
+                        craft, and legacy.</p>
+                    <div class="mt-4">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <div class="footer-heading">Explore</div>
+                    <a href="index.html" class="footer-link">Home</a>
+                    <!-- <a href="about.html" class="footer-link">About Us</a> -->
+                    <a href="gallery.html" class="footer-link">Gallery</a>
+                    <a href="awards.html" class="footer-link">Awards</a>
+                    <a href="sitemap.html" class="footer-link">Site Map</a>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <div class="footer-heading">Menus</div>
+                    <a href="menu.html#regular" class="footer-link">Regular</a>
+                    <a href="menu.html#lunch" class="footer-link">Lunch</a>
+                    <a href="menu.html#snacks" class="footer-link">Snacks</a>
+                    <a href="menu.html#dessert" class="footer-link">Desserts</a>
+                    <a href="menu.html#beverages" class="footer-link">Beverages</a>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-heading">Newsletter</div>
+                    <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:16px;">Subscribe for seasonal
+                        menus, exclusive offers & culinary stories.</p>
+                    <div class="d-flex">
+                        <input type="email" class="form-control" style="border-radius:0;flex:1;"
+                            placeholder="your@email.com" />
+                        <button class="btn-gold"
+                            style="white-space:nowrap;padding:14px 20px;font-size:.65rem;">Subscribe</button>
+                    </div>
+                    <div class="footer-heading mt-4">Head Office</div>
+                    <p style="color:var(--text-muted);font-size:.85rem;">JADONS Tower, Business Bay<br>Karachi,
+                        Pakistan<br>+92-21-1800-VINEGAR</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">© 2025 Vinegar Food Restaurant · JADONS Ltd. All Rights Reserved.</div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#"
+                            style="color:var(--text-muted);text-decoration:none;margin-left:20px;font-size:.78rem;">Privacy
+                            Policy</a>
+                        <a href="#"
+                            style="color:var(--text-muted);text-decoration:none;margin-left:20px;font-size:.78rem;">Terms
+                            of Service</a>
+                        <a href="feedback.html"
+                            style="color:var(--text-muted);text-decoration:none;margin-left:20px;font-size:.78rem;">Feedback</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTTOM NAV -->
+    <div id="bottomNav">
+        <a href="index.html" class="bottom-nav-item"><i class="fas fa-home"></i>Home</a>
+        <a href="full-menu.html" class="bottom-nav-item active"><i class="fas fa-utensils"></i>Menu</a>
+        <a href="gallery.html" class="bottom-nav-item"><i class="fas fa-images"></i>Gallery</a>
+        <a href="catering.html" class="bottom-nav-item"><i class="fas fa-concierge-bell"></i>Cater</a>
+        <a href="contact.html" class="bottom-nav-item"><i class="fas fa-phone"></i>Contact</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // CURSOR
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursor-ring');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        (function animCursor() {
+            cursor.style.left = mx - 6 + 'px'; cursor.style.top = my - 6 + 'px';
+            rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+            ring.style.left = rx - 18 + 'px'; ring.style.top = ry - 18 + 'px';
+            requestAnimationFrame(animCursor);
+        })();
+        document.querySelectorAll('a,button,.menu-card,.filter-tab').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2.5)');
+            el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+        });
+
+        // NAVBAR SCROLL
+        window.addEventListener('scroll', () => {
+            document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+            updateFilterTab();
+        });
+
+        // SCROLL REVEAL
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+        // FILTER TAB SCROLL
+        function scrollTo(id, btn) {
+            document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function updateFilterTab() {
+            const sections = ['regular', 'lunch', 'snacks', 'dessert', 'beverages', 'seasonal', 'chefs'];
+            const tabs = document.querySelectorAll('.filter-tab');
+            sections.forEach((s, i) => {
+                const el = document.getElementById(s);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= 200 && rect.bottom > 200) {
+                        tabs.forEach(t => t.classList.remove('active'));
+                        if (tabs[i]) tabs[i].classList.add('active');
+                    }
+                }
+            });
+        }
+
+        // SEARCH
+        function filterMenu(val) {
+            const items = document.querySelectorAll('.menu-item-el');
+            const q = val.toLowerCase();
+            let count = 0;
+            items.forEach(item => {
+                const name = item.getAttribute('data-name').toLowerCase();
+                const show = !q || name.includes(q);
+                item.style.display = show ? '' : 'none';
+                if (show) count++;
+            });
+            document.getElementById('searchCount').textContent = q ? `${count} result${count !== 1 ? 's' : ''}` : '';
+        }
+
+        // ADD TOAST
+        function addToast(name) {
+            const wrap = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast-item';
+            toast.innerHTML = `<span>Added to order:</span><br>${name}`;
+            wrap.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity .5s'; setTimeout(() => toast.remove(), 500); }, 2500);
+        }
+    </script>
+</body>
+
+</html>
